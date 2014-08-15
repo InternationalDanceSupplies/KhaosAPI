@@ -19,6 +19,7 @@ class Khaos{
 	public $PriceLists;
 	public $AgentList;
 	public $StockDataArray;
+	public $OrderImportResult;
 	
 	public function __construct($endpoint){
 		try{
@@ -158,9 +159,17 @@ class Khaos{
 		$this->GetStockDataArray();
 		
 	}
+	
+	public function ImportOrders($OrderXML){
+		try{
+			$this->OrderImportResult = $this->client->ImportOrders($OrderXML);
+		}catch(Exception $e){
+			echo 'Error connecting to endpoint.(ImportOrders)';
+		}
+	}
 }
 
-//Create Connectiojn
+//Create Connection
 $Connect = new Khaos('http://192.168.16.1/KhaosWeb/KhaosIDS.exe/wsdl/IKosWeb');
 //List All Functions
 var_dump($Connect->GetFunctions());
