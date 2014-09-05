@@ -12,7 +12,7 @@ $args = array('stockCode' => array('SKU001',
                                     'SKU002',
                                     'SKU003'));
 
-$stock = $khaosApiClient->export()->stock($args);
+$stockXML = $khaosApiClient->exportStock($args);
 ```
 
 This library is designed to the PSR-0 specification and can therefore ultilise the SplClassLoader Class.
