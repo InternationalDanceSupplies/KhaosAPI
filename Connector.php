@@ -2,7 +2,6 @@
 
 namespace KhaosAPI
 {
-
     class Connector
     {
         protected $_apiClient = null;
