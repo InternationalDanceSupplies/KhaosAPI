@@ -23,10 +23,16 @@ The PSR-0 specification is located here: [http://www.php-fig.org/psr/psr-0/](htt
 
 ```php
 
-// Assumes this library is installed at this location: /path/to/lib/KhaosAPI/
+/**
+ * Assumes this library is installed at this location: /path/to/lib/KhaosAPI/
+ */
 
+// Include the autoloader
 require 'SplClassLoader.php';
 
+// Create an instance of the autoloader referencing your parent library folder.
 $classLoader = new SplClassLoader(null, '/path/to/lib/');
+
+// register the autoloader.
 $classLoader->register();
 ```
