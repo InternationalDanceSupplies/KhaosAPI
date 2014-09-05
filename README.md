@@ -45,15 +45,12 @@ Calling bespoke Khaos API methods
 
 To call a bespoke API method you will first need to create a class that handles the call. Your class must extend \KhaosAPI\Caller\CallerAbstract
 
-So for example if you wanted to call a Khaos method called MyMethod you could do it like so:
+So for example, if you wanted to call a Khaos method called <code>MyMethod</code> you could do it like so:
 
 ```php
 namespace MyNamespace
-{
-    use \KhaosAPI\Called\CallerAbstract;
-    use \KhaosAPI\Utility\Obj;
-    
-    class MyMethod extends CallerAbstract
+{   
+    class MyMethod extends \KhaosAPI\Called\CallerAbstract
     {
         public function run()
         {   
