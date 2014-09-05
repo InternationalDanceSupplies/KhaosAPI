@@ -23,6 +23,24 @@ namespace KhaosAPI
             return $this->_callers;
         }
 
+        /**
+         * Register Caller method.
+         *
+         * @access public
+         * @author  Jon Matthews <joncarlmatthews@gmail.com>
+         * @param \KhaosAPI\Caller\CallerInterface $caller
+         * @return Client
+         */
+        public function registerCaller(\KhaosAPI\Caller\CallerInterface $caller,
+                                            $key = null)
+        {
+            if (is_null($key)){
+                $key = get_class($caller);
+            }
+            $this->_callers[$key] = $caller;
+            return $this;
+        }
+
         public function __call($className, $args)
         {
             $caller = null;
@@ -38,23 +56,23 @@ namespace KhaosAPI
 
             if (is_file($internalClassFileName)){
 
-                $caller = '\\KhaosAPI\\Caller\\' . $className;
+                $callerClass = '\\KhaosAPI\\Caller\\' . $className;
+
+                $caller = new $callerClass;
 
             }else{
 
-                foreach($this->getCallers() as $fqcn){
+                foreach($this->getCallers() as $fqcn => $obj){
 
                     if (preg_match('/' . $className . '$/', $fqcn)){
 
-                        $caller = $fqcn;
+                        $caller = $obj;
                         break;
                     }
                 }
             }
 
             if (!is_null($caller)){
-
-                $caller = new $caller;
 
                 // Set the client.
                 if ( (isset($args[1]))
