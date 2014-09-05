@@ -54,7 +54,7 @@ namespace MyNamespace
     {
         public function run()
         {   
-            return $this->getClient()->MyMethod();
+            return $this->getClient()->MyMethod(); // This is the call to the endpoint
         }
     }
 }
