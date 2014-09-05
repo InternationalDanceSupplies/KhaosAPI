@@ -70,7 +70,7 @@ $khaosApiClient = new KhaosApi\Client($soapClient);
 $khaosApiClient->registerCaller(new \MyNamespace\DoSomething);
 
 // Call DoSomething::run
-$stockXML = $khaosApiClient->doSomething($args);
+$stockXML = $khaosApiClient->doSomething();
 ```
 
 Arguments
