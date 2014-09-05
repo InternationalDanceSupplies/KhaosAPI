@@ -1,23 +1,79 @@
 <?php
 
+/**
+ * KhaosAPI
+ *
+ * @link        https://github.com/InternationalDanceSupplies/KhaosAPI for the canonical source repository
+ * @link        Coded to the Zend Framework Coding Standard for PHP 
+ *              http://framework.zend.com/manual/1.12/en/coding-standard.html
+ * 
+ * File format: UNIX
+ * File encoding: UTF8
+ * File indentation: Spaces (4). No tabs
+ *
+ */
+
 namespace KhaosAPI
 {
+    /**
+     * The Client class provides a wrapper for calling Khaos API endpoints.
+     *
+     * @final
+     * @author Jon Matthews <joncarlmatthews@gmail.com>
+     * @category KhaosAPI
+     * @package Client
+     */
     final class Client
     {
+        /**
+         * \SoapClient object.
+         *
+         * @access private
+         * @var \SoapClient
+         */
         private $_soapClient = null;
 
+        /**
+         * Array of callable classes
+         *
+         * @access private
+         * @var array
+         */
         private $_callers = array();
 
+        /**
+         * Class constructor
+         *
+         * @access public
+         * @author  Jon Matthews <joncarlmatthews@gmail.com>
+         * @param SoapClient $soapClient
+         * @return Client
+         */
         public function __construct(\SoapClient $soapClient)
         {
             $this->_soapClient = $soapClient;
         }
 
+
+        /**
+         * Returns SoapClient object.
+         *
+         * @access public
+         * @author  Jon Matthews <joncarlmatthews@gmail.com>
+         * @return SoapClient
+         */
         public function getClient()
         {
             return $this->_soapClient;
         }
 
+        /**
+         * Returns the list of user defined callers.
+         *
+         * @access public
+         * @author  Jon Matthews <joncarlmatthews@gmail.com>
+         * @return array
+         */
         public function getCallers()
         {
             return $this->_callers;
@@ -41,6 +97,16 @@ namespace KhaosAPI
             return $this;
         }
 
+        /**
+         * Method loads and executes the relevant caller class.
+         *
+         * @access public
+         * @author  Jon Matthews <joncarlmatthews@gmail.com>
+         * @param string $className
+         * @param array $args
+         * @throws KhaosAPI\Exception
+         * @return mixed
+         */
         public function __call($className, $args)
         {
             $caller = null;
