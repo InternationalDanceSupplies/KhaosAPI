@@ -2,8 +2,13 @@
 
 namespace KhaosAPI\Exporter
 {
-    class Stock extends ExporterAbstract
+    use \KhaosApi\Caller\CallerAbstract;
+    
+    class Stock extends CallerAbstract
     {
-        
+        public function run()
+        {
+            echo 'running';
+        }
     }
 }

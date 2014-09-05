@@ -2,7 +2,9 @@
 
 namespace KhaosAPI\Exporter
 {
-    abstract class ExporterAbstract implements ExporterInterface
+    use \KhaosApi\Caller\CallerAbstract;
+    
+    abstract class ExporterAbstract extends CallerAbstract implements ExporterInterface
     {
 
     }

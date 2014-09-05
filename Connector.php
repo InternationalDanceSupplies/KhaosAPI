@@ -5,14 +5,11 @@ namespace KhaosAPI
 
     class Connector
     {
-        public function __construct(SoapClient $client)
+        protected $_apiClient = null;
+        
+        public function __construct(Client $apiClient)
         {
-            $this->_client = $client;
-        }
-
-        public function export()
-        {
-            return new 
+            $this->_apiClient = $apiClient;
         }
     }
 }
