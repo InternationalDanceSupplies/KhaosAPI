@@ -27,7 +27,7 @@ namespace KhaosAPI\Exporter
                 $lastUpdated = '2000-01-01';
             }
 
-            return $this->getClient()->ExportStock($stockCode,
+            return $this->getClient()->GetStockList($stockCode,
                                                     $mappingType,
                                                     $lastUpdated);
         }
