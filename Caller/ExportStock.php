@@ -1,11 +1,10 @@
 <?php
 
-namespace KhaosAPI\Exporter
+namespace KhaosAPI\Caller
 {
-    use \KhaosApi\Caller\CallerAbstract;
     use \KhaosAPI\Utility\Obj;
     
-    class Stock extends CallerAbstract
+    class ExportStock extends CallerAbstract
     {
         public function run()
         {   
@@ -27,7 +26,7 @@ namespace KhaosAPI\Exporter
                 $lastUpdated = '2000-01-01';
             }
 
-            return $this->getClient()->GetStockList($stockCode,
+            return $this->getClient()->ExportStock($stockCode,
                                                     $mappingType,
                                                     $lastUpdated);
         }

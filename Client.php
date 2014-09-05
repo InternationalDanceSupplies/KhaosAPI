@@ -6,6 +6,9 @@ namespace KhaosAPI
     {
         private $_soapClient = null;
 
+        private $_callers = array('\\KhaosAPI\\Caller\\ExportStock',
+                                                '\\KhaosAPI\\Caller\\GetVersion');
+
         public function __construct(\SoapClient $soapClient)
         {
             $this->_soapClient = $soapClient;
@@ -16,14 +19,42 @@ namespace KhaosAPI
             return $this->_soapClient;
         }
 
-        public function export()
+        public function getCallers()
         {
-            return new Exporter($this);
+            return $this->_callers;
         }
 
-        public function import()
+        public function __call($className, $args)
         {
-            return new Importer($this);
+            $className = ucfirst($className);
+
+            foreach($this->getCallers() as $fqcn){
+
+                if (preg_match('/' . $className . '$/', $fqcn)){
+
+                    $caller = new $fqcn;
+
+                    // Set the client.
+                    if ( (isset($args[1]))
+                            && ($args[1] instanceof \SoapClient) ){
+                        $caller->setClient($args[1]);
+                    }else{
+                        $caller->setClient($this->getClient());
+                    }
+
+                    // Set the arguments.
+                    if (isset($args[0])){
+                        $caller->setArgs($args[0]);
+                    }
+
+                    // Call the endpoint.
+                    return $caller->run();
+
+                    break;
+                }
+            }
+
+            throw new Exception('Caller ' . $className . ' not found');
         }
     }
 }
