@@ -99,7 +99,7 @@ namespace MyNamespace
     {
         public function run()
         {   
-            return $this->getClient()->DoSomething(); // This is the call to the endpoint
+            return $this->getClient()->DoSomething(); // This is the call to the SOAP method DoSomething.
         }
     }
 }
