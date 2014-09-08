@@ -132,3 +132,16 @@ namespace MyNamespace
     }
 }
 ```
+
+Calling methods with differing SoapClient instances.
+---------------
+
+You can also chosoe to call SOAP methods using a different SoapClient instance if you wish. The second argument of each method call can accept a SoapClient instance to use just for that request.
+
+```php
+$args = array('qux' => true);
+
+$newSoapClient = new SoapClient('https://KhaosServer/KhaosIDS.exe/wsdl/IKosWeb');
+
+$khaosApiClient->doSomething($args, $newSoapClient);
+```
