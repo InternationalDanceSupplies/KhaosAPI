@@ -1,4 +1,4 @@
-Keystone Khaos API Library
+Keystone Khaos API PHP Library
 =========================
 
 Example Usage
@@ -24,6 +24,8 @@ The SplClassLoader Class can be found here: [http://www.php-fig.org/psr/psr-0/](
 
 The PSR-0 specification is located here: [http://www.php-fig.org/psr/psr-0/](http://www.php-fig.org/psr/psr-0/)
 
+Example of registering the autoloader to work with this library.
+
 ```php
 
 /**
@@ -38,12 +40,45 @@ $classLoader = new SplClassLoader(null, '/path/to/lib/');
 
 // register the autoloader.
 $classLoader->register();
+
+// Library can now be autoloaded like so:
+$soapClient = new SoapClient('https://KhaosServer/KhaosIDS.exe/wsdl/IKosWeb');
+$khaosApiClient = new KhaosApi\Client($soapClient);
 ```
+
+Internal Class API
+---------------
+This library has been designed to have one Class per Khaos API endpoint. All of the Classes reside within the <code>KhaosAPI/Caller/</code> directory.
+
+Classes will have the same (titled cased) name as the SOAP method it's calling. So, if the SOAP method is called GetStockList then the class will be called GetStockList.php.
+
+**These Classes are called** ***Callers***
+
+```
+KhaosAPI/Caller/GetStockList.php
+```
+
+To execute this Caller you do so via a <code>KhaosApi\Client</code> instance variable. See example below.
+
+```php
+$khaosApiClient->getStockList($args);
+```
+
+When you execute Callers you reference them in camel case. Not title case. Calling a caller will execute the <code>run</code> method within that particular class.
+
+Therefore...
+
+```php
+$khaosApiClient->getStockList($args);
+```
+
+...will result in executing KhaosAPI/Caller/GetStockList::run()
+
 
 Calling bespoke Khaos API methods
 ---------------
 
-To call a bespoke API method you will first need to create a class that handles the call. Your class must extend \KhaosAPI\Caller\CallerAbstract
+To call a bespoke SOAP method you will first need to create a Class (Caller) that handles the call. Your Class must extend \KhaosAPI\Caller\CallerAbstract
 
 So for example, if you wanted to call a Khaos method called <code>DoSomething</code> you could do it like so:
 
