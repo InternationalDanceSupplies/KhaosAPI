@@ -46,13 +46,27 @@ $soapClient = new SoapClient('https://KhaosServer/KhaosIDS.exe/wsdl/IKosWeb');
 $khaosApiClient = new KhaosApi\Client($soapClient);
 ```
 
+Arguments
+---------------
+Arguments should be passed into the methods as a multidimensional arrays.
+
+```php
+$args = array('foo' => array('bar',
+                                'baz'),
+                'qux' => true);
+
+$khaosApiClient->doSomething($args);
+```
+
+You'll need to see the Class and Khaos documentation to understand which arguments are accepted.
+
 Internal Class API
 ---------------
 This library has been designed to have one Class per Khaos API endpoint. All of the Classes reside within the <code>KhaosAPI/Caller/</code> directory.
 
-Classes will have the same (titled cased) name as the SOAP method it's calling. So, if the SOAP method is called GetStockList then the class will be called GetStockList.php <code>KhaosAPI/Caller/GetStockList.php</code>.
+Classes have the same (titled cased) name as the SOAP method it's calling. So, if the SOAP method is called GetStockList then the Class will be named GetStockList.php <code>KhaosAPI/Caller/GetStockList.php</code>.
 
-**These Classes are called** ***Callers***
+**These Classes are called** ***Callers.***
 
 For example; to execute the GetStockList Caller you do so via a <code>KhaosApi\Client</code> instance variable. See example below:
 
@@ -60,7 +74,7 @@ For example; to execute the GetStockList Caller you do so via a <code>KhaosApi\C
 $khaosApiClient->getStockList($args);
 ```
 
-When you execute Callers you reference them in camel case. Not title case. Calling a caller will execute the <code>run</code> method within that particular class.
+When you execute Callers you reference them in camel case. Not title case. Calling a Caller will execute the <code>run</code> method within that particular Class.
 
 Therefore...
 
@@ -74,7 +88,7 @@ $khaosApiClient->getStockList($args);
 Calling bespoke Khaos API methods
 ---------------
 
-To call a bespoke SOAP method you will first need to create a Class (Caller) that handles the call. Your Class must extend \KhaosAPI\Caller\CallerAbstract
+To call a bespoke SOAP method you will first need to create a Caller (Class) that handles the request. Your Class must extend \KhaosAPI\Caller\CallerAbstract
 
 So for example, if you wanted to call a Khaos method called <code>DoSomething</code> you could do it like so:
 
@@ -104,6 +118,17 @@ $khaosApiClient->registerCaller(new \MyNamespace\DoSomething);
 $stockXML = $khaosApiClient->doSomething();
 ```
 
-Arguments
----------------
-Documentation coming soon.
+To access supplied arguments within your Caller use the <code>getArgs()</code> method.
+
+```php
+namespace MyNamespace
+{   
+    class DoSomething extends \KhaosAPI\Called\CallerAbstract
+    {
+        public function run()
+        {   
+            $this->getArgs()->myKey; // $args['myKey']
+        }
+    }
+}
+```
