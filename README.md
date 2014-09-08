@@ -50,15 +50,11 @@ Internal Class API
 ---------------
 This library has been designed to have one Class per Khaos API endpoint. All of the Classes reside within the <code>KhaosAPI/Caller/</code> directory.
 
-Classes will have the same (titled cased) name as the SOAP method it's calling. So, if the SOAP method is called GetStockList then the class will be called GetStockList.php.
+Classes will have the same (titled cased) name as the SOAP method it's calling. So, if the SOAP method is called GetStockList then the class will be called GetStockList.php <code>KhaosAPI/Caller/GetStockList.php</code>.
 
 **These Classes are called** ***Callers***
 
-```
-KhaosAPI/Caller/GetStockList.php
-```
-
-To execute this Caller you do so via a <code>KhaosApi\Client</code> instance variable. See example below.
+For example; to execute the GetStockList Caller you do so via a <code>KhaosApi\Client</code> instance variable. See example below:
 
 ```php
 $khaosApiClient->getStockList($args);
