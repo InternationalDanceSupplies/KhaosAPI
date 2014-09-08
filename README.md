@@ -82,7 +82,7 @@ Therefore...
 $khaosApiClient->getStockList($args);
 ```
 
-...will result in executing KhaosAPI/Caller/GetStockList::run()
+...will result in executing <code>KhaosAPI/Caller/GetStockList::run()</code>
 
 
 Calling bespoke Khaos API methods
@@ -95,7 +95,7 @@ So for example, if you wanted to call a Khaos method called <code>DoSomething</c
 ```php
 namespace MyNamespace
 {   
-    class DoSomething extends \KhaosAPI\Called\CallerAbstract
+    class DoSomething extends \KhaosAPI\Caller\CallerAbstract
     {
         public function run()
         {   
@@ -123,7 +123,7 @@ To access supplied arguments within your Caller use the <code>getArgs()</code> m
 ```php
 namespace MyNamespace
 {   
-    class DoSomething extends \KhaosAPI\Called\CallerAbstract
+    class DoSomething extends \KhaosAPI\Caller\CallerAbstract
     {
         public function run()
         {   
