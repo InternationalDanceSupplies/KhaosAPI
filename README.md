@@ -105,7 +105,7 @@ namespace MyNamespace
 }
 ```
 
-You would then call it like this:
+You would then call you Class like this:
 ```php
 $soapClient = new SoapClient('https://KhaosServer/KhaosIDS.exe/wsdl/IKosWeb');
 
