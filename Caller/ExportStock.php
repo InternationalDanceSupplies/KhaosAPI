@@ -28,6 +28,17 @@ namespace KhaosAPI\Caller
     class ExportStock extends CallerAbstract
     {
         /**
+         * API Mapping Type values.
+         *
+         * @static
+         * @access public
+         * @var integer
+         */
+        const MAPPING_TYPE_STOCK_CODE   = 1;
+        const MAPPING_TYPE_OTHER_REF    = 2;
+        const MAPPING_TYPE_SHORT_DESC   = 4;
+
+        /**
          * Calls the endpoint.
          *
          * This is called before init().
@@ -38,24 +49,45 @@ namespace KhaosAPI\Caller
          */
         public function run()
         {   
-            if (!isset($this->getArgs()->stockCode)){
-                throw new Exception('stockCode argument not set.');
-            }
-
-            $stockCode = Obj::toString($this->getArgs()->stockCode);
-
-            if (isset($this->getArgs()->mappingType)){
-                $mappingType = $this->getArgs()->mappingType;
+            // Stock code.
+            if (isset($this->getArgs()->stockCode)){
+                $stockCode = Obj::toString($this->getArgs()->stockCode);
             }else{
-                $mappingType = 1;
+                $stockCode = null;
             }
 
+            // Mapping type.
+            if (isset($this->getArgs()->mappingType)){
+
+                switch($this->getArgs()->mappingType){
+
+                    case self::MAPPING_TYPE_STOCK_CODE:
+                    case self::MAPPING_TYPE_OTHER_REF:
+                    case self::MAPPING_TYPE_SHORT_DESC:
+
+                        $mappingType = $this->getArgs()->mappingType;
+
+                        break;
+
+                    default:
+
+                        throw new Exception('Invalid mappingType value.');
+
+                        break;
+                }
+
+            }else{
+                $mappingType = self::MAPPING_TYPE_STOCK_CODE;
+            }
+
+            // Last updated.
             if (isset($this->getArgs()->lastUpdated)){
                 $lastUpdated = $this->getArgs()->lastUpdated;
             }else{
-                $lastUpdated = '2000-01-01';
+                $lastUpdated = null;
             }
 
+            // Call server.
             return $this->getClient()->ExportStock($stockCode,
                                                     $mappingType,
                                                     $lastUpdated);
