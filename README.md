@@ -48,7 +48,7 @@ $khaosApiClient = new KhaosApi\Client($soapClient);
 
 Arguments
 ---------------
-Arguments should be passed into the methods as a multidimensional arrays.
+Arguments should be passed into the methods as multidimensional arrays.
 
 ```php
 $args = array('foo' => array('bar',
@@ -58,11 +58,11 @@ $args = array('foo' => array('bar',
 $khaosApiClient->doSomething($args);
 ```
 
-You'll need to see the Class and Khaos documentation to understand which arguments are accepted.
+You'll need to see the relevant Class and Khaos documentation to understand which Classes accept which arguments.
 
 Internal Class API
 ---------------
-This library has been designed to have one Class per Khaos API endpoint. All of the Classes reside within the <code>KhaosAPI/Caller/</code> directory.
+This library has been designed to have one Class per Khaos API method. All of the Classes reside within the <code>KhaosAPI/Caller/</code> directory.
 
 Classes have the same (titled cased) name as the SOAP method it's calling. So, if the SOAP method is called GetStockList then the Class will be named GetStockList.php <code>KhaosAPI/Caller/GetStockList.php</code>.
 
