@@ -19,7 +19,7 @@ namespace KhaosAPI\Caller
     use \KhaosAPI\Utility\Obj;
     
     /**
-     * The ExportStock class provides method for calling the ExportStock SOAP
+     * The ExportStock class provides methods for calling the ExportStock SOAP
      * method.
      *
      * @author Jon Matthews <joncarlmatthews@gmail.com>
@@ -42,7 +42,6 @@ namespace KhaosAPI\Caller
         /**
          * Calls the endpoint.
          *
-         * This is called before init().
          * 
          * @access public
          * @author Jon Matthews <joncarlmatthews@gmail.com>
