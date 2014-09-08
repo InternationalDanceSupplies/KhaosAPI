@@ -57,14 +57,11 @@ namespace KhaosAPI\Utility
         {
             $result = new \stdClass();
             
-            foreach ($array as $key => $value)
-            {
-                if (is_array($value))
-                {
+            foreach ($array as $key => $value){
+
+                if (is_array($value)){
                     $result->{$key} = self::toObject($value);
-                }
-                else
-                {
+                }else{
                     $result->{$key} = $value;
                 }
             }

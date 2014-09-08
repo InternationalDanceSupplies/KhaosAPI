@@ -54,8 +54,7 @@ namespace KhaosAPI
         {
             $this->_soapClient = $soapClient;
         }
-
-
+        
         /**
          * Returns SoapClient object.
          *

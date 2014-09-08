@@ -18,6 +18,13 @@ namespace KhaosAPI\Caller
 {
     use \KhaosAPI\Utility\Arr;
     
+    /**
+     * The abstract class CallerAbstract provides base functionality for child
+     * Caller classes.
+     *
+     * @category   KhaosAPI
+     * @package    Caller
+     */
     abstract class CallerAbstract implements CallerInterface
     {
         /**
