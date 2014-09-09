@@ -44,6 +44,14 @@ namespace KhaosAPI\Caller
         private $_args = array();
 
         /**
+         * Cached Caller arguments as an object.
+         *
+         * @access private
+         * @var NULL|StdClass
+         */
+        private $_argsAsObject = null;
+
+        /**
          * Setter for @link $_client
          * 
          * @access public
@@ -94,7 +102,12 @@ namespace KhaosAPI\Caller
             $asObject = (bool)$asObject;
 
             if ($asObject){
-                return Arr::toObject($this->_args);
+
+                if (is_null($this->_argsAsObject)){
+                    $this->_argsAsObject = Arr::toObject($this->_args);
+                }
+
+                return $this->_argsAsObject;
             }
 
             return $this->_args;
