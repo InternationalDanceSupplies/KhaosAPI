@@ -15,9 +15,7 @@
  */
 
 namespace KhaosAPI\Caller
-{
-    use \KhaosAPI\Utility\Obj;
-    
+{   
     /**
      * The ImportOrders class provides methods for calling the ImportOrders SOAP
      * method.
@@ -28,7 +26,6 @@ namespace KhaosAPI\Caller
      */
     class ImportOrders extends CallerAbstract
     {
-
         /**
          * \SimpleXMLElement object
          *
@@ -94,8 +91,10 @@ namespace KhaosAPI\Caller
 
         /**
          * Converts a MD array into XML nodes.
+         *
+         * @todo Move to \KhaosAPI\Utility\Arr Class?
          * 
-         * @access public
+         * @access private
          * @author Jon Matthews <joncarlmatthews@gmail.com>
          * @param array $bind
          * @param \SimpleXMLElement $xmlParentNode
@@ -108,14 +107,12 @@ namespace KhaosAPI\Caller
                     if(!is_numeric($key)){
                         $subnode = $xmlParentNode->addChild("$key");
                         $this->_arrayToXml($value, $subnode);
-                    }
-                    else{
+                    }else{
                         $subnode = $xmlParentNode->addChild("item$key");
                         $this->_arrayToXml($value, $subnode);
                     }
-                }
-                else {
-                    $xmlParentNode->addChild("$key",htmlspecialchars("$value"));
+                } else {
+                    $xmlParentNode->addChild("$key", htmlspecialchars("$value"));
                 }
             }
         }
