@@ -64,7 +64,7 @@ Internal Class API
 ---------------
 This library has been designed to have one Class per Khaos API method. All of the Classes reside within the <code>KhaosAPI/Caller/</code> directory.
 
-Classes have the same (titled cased) name as the SOAP method it's calling. So, if the SOAP method is called GetStockList then the Class will be named GetStockList.php <code>KhaosAPI/Caller/GetStockList.php</code>.
+Classes have the same (title cased) name as the SOAP method it's calling. So, if the SOAP method is called GetStockList then the Class will be named GetStockList.php <code>KhaosAPI/Caller/GetStockList.php</code>.
 
 **These Classes are called** ***Callers.***
 
@@ -136,7 +136,7 @@ namespace MyNamespace
 Calling methods with differing SoapClient instances.
 ---------------
 
-You can also chosoe to call SOAP methods using a different SoapClient instance if you wish. The second argument of each method call can accept a SoapClient instance to use just for that request.
+You can also choose to call SOAP methods using a different SoapClient instance if you wish. The second argument of each method call can accept a SoapClient instance to use just for that request.
 
 ```php
 $args = array('qux' => true);
