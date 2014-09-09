@@ -54,18 +54,6 @@ namespace KhaosAPI\Caller
             $this->_xmlObj = new \SimpleXMLElement($this->_xmlPath);
         }
 
-        private function _addNodeFromArray(array $bind,
-                                            \SimpleXMLElement $parentNode,
-                                            $xmlNodeKey, 
-                                            $defaultValue = null)
-        {
-            if(isset($bind[$xmlNodeKey])){
-                $parentNode->addChild($xmlNodeKey, $bind[$xmlNodeKey]); 
-            }else{
-                $parentNode->addChild($xmlNodeKey, $defaultValue); 
-            }
-        }
-
         /**
          * Calls the endpoint.
          * 
@@ -80,56 +68,17 @@ namespace KhaosAPI\Caller
                 throw new Exception('Missing orders array.');
             }
 
-            foreach($this->getArgs(false) as $order){
+            $args = $this->getArgs(false);
 
-                // <SALES_ORDER>
+            foreach($args['orders'] as $order){
+
                 $salesOrder = $this->_xmlObj->addChild('SALES_ORDER');
 
-                $customerDetail     = $salesOrder->addChild('CUSTOMER_DETAIL');
-                $payments           = $salesOrder->addChild('PAYMENTS');
-                $orderHeader        = $salesOrder->addChild('ORDER_HEADER');
-                $orderItems         = $salesOrder->addChild('ORDER_ITEMS');
-
-                // <CUSTOMER_DETAIL>
-                $this->_addNodeFromArray($order, $customerDetail, 'IS_NEW_CUSTOMER');
-                $this->_addNodeFromArray($order, $customerDetail, 'COMPANY_CODE');
-                $this->_addNodeFromArray($order, $customerDetail, 'OTHER_REF');
-                $this->_addNodeFromArray($order, $customerDetail, 'WEB_SITE');
-                $this->_addNodeFromArray($order, $customerDetail, 'WEB_USER');
-                $this->_addNodeFromArray($order, $customerDetail, 'COMPANY_CLASS');
-                $this->_addNodeFromArray($order, $customerDetail, 'COMPANY_TYPE');
-                $this->_addNodeFromArray($order, $customerDetail, 'COMPANY_NAME');
-                $this->_addNodeFromArray($order, $customerDetail, 'SOURCE_CODE');
-                $this->_addNodeFromArray($order, $customerDetail, 'MAILING_STATUS');
-                $this->_addNodeFromArray($order, $customerDetail, 'OPTIN_NEWSLETTER');
-                $this->_addNodeFromArray($order, $customerDetail, 'TAX_REFERENCE');
-
-                // <ADDRESSES>
-                $addresses = $CustomerDetail->addChild('ADDRESSES');
-
-                //<INVADDR>
-                $InvoiceAddress = $Addresses->addChild('INVADDR');
-                $InvoiceAddress->addChild('IADDRESS1','');  
-                $InvoiceAddress->addChild('IADDRESS2','');  
-                $InvoiceAddress->addChild('IADDRESS3','');  
-                $InvoiceAddress->addChild('ITOWN','');  
-                $InvoiceAddress->addChild('ICOUNTY','');    
-                $InvoiceAddress->addChild('IPOSTCODE','');  
-                $InvoiceAddress->addChild('ICOUNTRY_CODE','');  
-                $InvoiceAddress->addChild('ITITLE','');
-                $InvoiceAddress->addChild('IFORENAME','');  
-                $InvoiceAddress->addChild('ISURNAME','');   
-                $InvoiceAddress->addChild('ITEL','');   
-                $InvoiceAddress->addChild('IFAX','');   
-                $InvoiceAddress->addChild('IMOBILE','');    
-                $InvoiceAddress->addChild('IEMAIL',''); 
-                $InvoiceAddress->addChild('IEMAIL_SUBSCRIBER',''); //0 = no, -1 = Yes
-                $InvoiceAddress->addChild('IDOB','');
-                $InvoiceAddress->addChild('IORGANISATION','');
-
+                $this->_arrayToXml($order, $salesOrder);
             }
 
             // Debug:
+            /*
             header('Content-Type: application/xml; charset=utf-8');
             $domxml = new \DOMDocument('1.0');
             $domxml->preserveWhiteSpace = false;
@@ -137,12 +86,29 @@ namespace KhaosAPI\Caller
             $domxml->loadXML($this->_xmlObj->asXML());
             echo $domxml->saveXML();
             exit();
-
-            //$orders = '';
-            //echo $orders;
+            */
 
             // Call server.
-            //return $this->getClient()->ImportOrders('<SALES_ORDERS xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.keystonesoftware.co.uk/xml/KSDXMLImportFormat.xsd">');
+            return $this->getClient()->ImportOrders($this->_xmlObj->asXML());
+        }
+
+        private function _arrayToXml($student_info, &$xml_student_info)
+        {
+            foreach($student_info as $key => $value) {
+                if(is_array($value)) {
+                    if(!is_numeric($key)){
+                        $subnode = $xml_student_info->addChild("$key");
+                        $this->_arrayToXml($value, $subnode);
+                    }
+                    else{
+                        $subnode = $xml_student_info->addChild("item$key");
+                        $this->_arrayToXml($value, $subnode);
+                    }
+                }
+                else {
+                    $xml_student_info->addChild("$key",htmlspecialchars("$value"));
+                }
+            }
         }
     }
 }
