@@ -55,7 +55,7 @@ namespace KhaosAPI\Caller
         }
 
         /**
-         * Calls the endpoint.
+         * Calls ImportOrders.
          * 
          * @access public
          * @author Jon Matthews <joncarlmatthews@gmail.com>
@@ -92,21 +92,30 @@ namespace KhaosAPI\Caller
             return $this->getClient()->ImportOrders($this->_xmlObj->asXML());
         }
 
-        private function _arrayToXml($student_info, &$xml_student_info)
+        /**
+         * Converts a MD array into XML nodes.
+         * 
+         * @access public
+         * @author Jon Matthews <joncarlmatthews@gmail.com>
+         * @param array $bind
+         * @param \SimpleXMLElement $xmlParentNode
+         * @return void
+         */
+        private function _arrayToXml($bind, &$xmlParentNode)
         {
-            foreach($student_info as $key => $value) {
+            foreach($bind as $key => $value) {
                 if(is_array($value)) {
                     if(!is_numeric($key)){
-                        $subnode = $xml_student_info->addChild("$key");
+                        $subnode = $xmlParentNode->addChild("$key");
                         $this->_arrayToXml($value, $subnode);
                     }
                     else{
-                        $subnode = $xml_student_info->addChild("item$key");
+                        $subnode = $xmlParentNode->addChild("item$key");
                         $this->_arrayToXml($value, $subnode);
                     }
                 }
                 else {
-                    $xml_student_info->addChild("$key",htmlspecialchars("$value"));
+                    $xmlParentNode->addChild("$key",htmlspecialchars("$value"));
                 }
             }
         }
