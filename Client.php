@@ -138,27 +138,28 @@ namespace KhaosAPI
                 }
             }
 
-            if (!is_null($caller)){
+            if (is_null($caller)){
+                
+                $caller = new \KhaosAPI\Caller\Generic;
 
-                // Set the client.
-                if ( (isset($args[1]))
-                        && ($args[1] instanceof \SoapClient) ){
-                    $caller->setClient($args[1]);
-                }else{
-                    $caller->setClient($this->getClient());
-                }
-
-                // Set the arguments.
-                if (isset($args[0])){
-                    $caller->setArgs($args[0]);
-                }
-
-                // Call the endpoint.
-                return $caller->run();
-
-            }else{
-                throw new Exception('Caller ' . $className . ' not found');
+                $caller->setCalledMethodName($className);
             }
+
+            // Set the client.
+            if ( (isset($args[1]))
+                    && ($args[1] instanceof \SoapClient) ){
+                $caller->setClient($args[1]);
+            }else{
+                $caller->setClient($this->getClient());
+            }
+
+            // Set the arguments.
+            if (isset($args[0])){
+                $caller->setArgs($args[0]);
+            }
+
+            // Call the endpoint.
+            return $caller->run();
         }
     }
 }
